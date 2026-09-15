@@ -22,21 +22,24 @@ entries:
       description: "Add/Remove Programs for the Chicago desktop — the application's wippy modules, and edits of its dependency declarations."
 
   # ─── Dependencies ────────────────────────────────────────────────────
-  # A compatibility range, never an exact version: the lock holds the exact
-  # one. `*` is any published version.
-  - version: "*"
+  # The shell and the base are resolved from their GitHub repositories by
+  # tag — `component` names the repository, the module keeps its own name
+  # (chicago/shell, chicago/tui-desktop) in the lock. A compatibility range,
+  # never an exact version: the lock holds the exact one, and the range says
+  # what the module was written against (v0.2.0 is the first tag of both).
+  - version: ">=0.2.0"
     name: dep.chicago.shell
     kind: ns.dependency
     meta:
       comment: "The Chicago shell — its SDK lays out and draws the window, its image packs bring the picture, its config library reads the environment."
-    component: chicago/shell
+    component: github.com/chicago-desktop/shell
 
-  - version: "*"
+  - version: ">=0.2.0"
     name: dep.chicago.tui_desktop
     kind: ns.dependency
     meta:
       comment: "The desktop base — the compositor that owns the window's frame, size and input, and asks the logged-on person's scope for chicago.admin."
-    component: chicago/tui-desktop
+    component: github.com/chicago-desktop/tui-desktop
 
   # chicago.appwiz:images
   #

@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app
 
-# Standalone harness for windows/appwiz. Provides the host resources the boot
+# Standalone harness for chicago/appwiz. Provides the host resources the boot
 # needs (app:db, app:processes, a gateway and a router for the shell's
 # endpoints, env storage, a permissive actor scope) and runs the co-located
 # *_test.lua suites. Excluded from publish by the module's wippy.yaml.
@@ -21,21 +21,21 @@ entries:
       type: test
       comment: "Add/Remove Programs — merging the declarations with the cache, editing the declarations file as text, the name of a new entry, writing with a backup."
       group: Add/Remove Programs
-      suite: windows_appwiz
+      suite: chicago_appwiz
     source: file://appwiz_test.lua
     method: run
     modules: [fs]
     imports:
       test: wippy.test:test
-      model: windows.appwiz:model
+      model: chicago.appwiz:model
 
   - name: window_test
     kind: function.lua
     meta:
       type: test
-      comment: "The window's registry entry the Start menu reads (Settings, windows.admin, the picture of its own image pack at both sizes), its policies, the process without a declarations folder, and test/shots/appwiz.png drawn by the shell's renderer."
+      comment: "The window's registry entry the Start menu reads (Settings, chicago.admin, the picture of its own image pack at both sizes), its policies, the process without a declarations folder, and test/shots/appwiz.png drawn by the shell's renderer."
       group: Add/Remove Programs
-      suite: windows_appwiz
+      suite: chicago_appwiz
     source: file://window_test.lua
     method: run
     # The window's own modules (it is loaded here as an import), `gfx` and
@@ -43,12 +43,12 @@ entries:
     modules: [tty, gfx, fs, registry, env, hub, time]
     imports:
       test: wippy.test:test
-      app: windows.shell.sdk:app
-      ui: windows.shell.sdk:ui
-      render: windows.shell.sdk:render
-      rasters: windows.shell.theme:rasters
-      images: windows.shell.theme:images
-      window: windows.appwiz:window
+      app: chicago.shell.sdk:app
+      ui: chicago.shell.sdk:ui
+      render: chicago.shell.sdk:render
+      rasters: chicago.shell.theme:rasters
+      images: chicago.shell.theme:images
+      window: chicago.appwiz:window
 
   # Where appwiz_test writes the declarations file for real: writing with a
   # copy and reading it back is checked on a live fs, not on a stand-in.
@@ -125,7 +125,7 @@ entries:
     kind: ns.dependency
     meta:
       comment: The module under test; its source is replaced with ../ in .wippy.yaml.
-    component: "windows/appwiz"
+    component: "chicago/appwiz"
 
   - name: appwiz_harness.dep.migration
     version: "*"

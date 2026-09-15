@@ -8,7 +8,7 @@ is the shell's, and its work sequence applies here.
 
 What to know before the first edit:
 
-- **Only a build of the runtime fork runs this module** (wippy-windows/runtime,
+- **Only a build of the runtime fork runs this module** (chicago-desktop/runtime,
   branch `wippy-projects`): the shell declares `gfx`, and a release `wippy`
   refuses to load it with `node with ID {gfx :gfx} not found`. The Makefile's
   `WIPPY` names the build; `make lint` with a release `wippy` verifies nothing.
@@ -16,7 +16,7 @@ What to know before the first edit:
   wippy.terminal:host`; it writes `test/shots/appwiz.png`, the window as the
   shell's renderer drew it. Look at the picture: the geometry checks do not
   see a wrong colour or a caption a pixel off.
-- **The application names the declarations folder** (`WINDOWS_DEPS_FS`, the
+- **The application names the declarations folder** (`CHICAGO_DEPS_FS`, the
   id of an `fs.directory`); the module declares none. The harness sets no
   such variable, so the window runs read-only there.
 - **A `local` declared below the function that reads it is a nil global**,

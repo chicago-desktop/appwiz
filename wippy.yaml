@@ -1,8 +1,8 @@
-organization: windows
+organization: chicago
 module: appwiz
-description: Add/Remove Programs for the Windows 95 shell (windows/shell) — lists the application's wippy modules and edits its dependency declarations; the change takes effect after wippy update and a restart.
+description: Add/Remove Programs for the Windows 95 shell (chicago/shell) — lists the application's wippy modules and edits its dependency declarations; the change takes effect after wippy update and a restart.
 license: MIT
-repository: https://github.com/wippy-windows/appwiz
+repository: https://github.com/chicago-desktop/appwiz
 homepage: https://wippy.ai
 keywords:
   - kickside
@@ -27,4 +27,4 @@ exclude:
 # entries listed under `embed:`. The image pack lives outside src/ and is
 # packed only when named here.
 embed:
-  - windows.appwiz:images
+  - chicago.appwiz:images

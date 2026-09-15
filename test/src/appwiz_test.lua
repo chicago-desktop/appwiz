@@ -19,9 +19,9 @@ local SAMPLE = table.concat({
     "    name: tui-desktop",
     "    kind: ns.dependency",
     "    meta: {}",
-    "    component: windows/tui-desktop",
+    "    component: chicago/tui-desktop",
     "    parameters:",
-    "      - name: windows.tui_desktop:api_router",
+    "      - name: chicago.tui_desktop:api_router",
     "        value: app:api",
     "",
     "  # app.deps:blog",
@@ -44,8 +44,8 @@ local function define_tests()
         test.it("the application declaration outranks another, the cache gives the pinned version and size", function()
             local rows = model.merge({
                 {id = "app.deps:bridge", component = "acme/bridge", version = ">=v0.0.0"},
-                {id = "windows.shell:dep.wippy.migration", component = "wippy/migration", version = "*"},
-                {id = "app.deps:windows", component = "windows/shell", version = ">=v0.0.0"},
+                {id = "chicago.shell:dep.wippy.migration", component = "wippy/migration", version = "*"},
+                {id = "app.deps:windows", component = "chicago/shell", version = ">=v0.0.0"},
             }, {
                 {module = "acme/bridge", version = "0.1.95", size = 100, pinned = false},
                 {module = "acme/bridge", version = "0.1.96", size = 3340000, pinned = true},
@@ -60,11 +60,11 @@ local function define_tests()
             test.eq(rows[1].size, 3340000)
             test.eq(rows[2].component, "chestor/graph")
             test.eq(rows[2].owner, "cache")
-            test.eq(rows[3].component, "windows/shell")
+            test.eq(rows[3].component, "chicago/shell")
             test.is_nil(rows[3].version, "a working copy is not in the cache")
             test.eq(rows[4].owner, "module")
-            test.eq(rows[4].declared_by, "windows.shell")
-            test.is_true(model.owner_text(rows[4]):find("windows.shell", 1, true) ~= nil)
+            test.eq(rows[4].declared_by, "chicago.shell")
+            test.is_true(model.owner_text(rows[4]):find("chicago.shell", 1, true) ~= nil)
         end)
 
         test.it("size is formatted with a dot and MB", function()

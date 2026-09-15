@@ -1,5 +1,5 @@
 -- Add/Remove Programs' window: the registry entry the Start menu reads (the
--- Settings folder, windows.admin, the picture of its own pack), the permissions its
+-- Settings folder, chicago.admin, the picture of its own pack), the permissions its
 -- process carries, the process itself in a harness that names no
 -- declarations folder, and a shot (test/shots/appwiz.png) drawn by the
 -- shell's own renderer.
@@ -54,17 +54,17 @@ end
 
 local function define_tests()
     test.describe("Add/Remove Programs window", function()
-        test.it("is a Settings window on the shell SDK, for windows.admin only, with the picture of its own pack", function()
-            local _, meta = data_of("windows.appwiz:window")
+        test.it("is a Settings window on the shell SDK, for chicago.admin only, with the picture of its own pack", function()
+            local _, meta = data_of("chicago.appwiz:window")
             test.eq(table.concat({meta.type, meta.title, meta.group, meta.image, meta.window_type,
                 meta.pixel_render, meta.pixel_state}, "|"),
-                "tui_desktop.window|Add/Remove Programs|Settings|windows.appwiz:images/appwizard|app|"
-                    .. "windows.shell.sdk:render|windows.appwiz:window")
+                "tui_desktop.window|Add/Remove Programs|Settings|chicago.appwiz:images/appwizard|app|"
+                    .. "chicago.shell.sdk:render|chicago.appwiz:window")
             -- An entry without the field opens for everyone, silently: the
             -- compositor asks the logged-on person's scope only when it is named.
-            test.eq(meta.requires, "windows.admin")
+            test.eq(meta.requires, "chicago.admin")
             -- The shell resolves a pack picture through the registry: the
-            -- entry is an fs.directory of meta.type windows.images.
+            -- entry is an fs.directory of meta.type chicago.images.
             for _, size in ipairs({32, 16}) do
                 local picture, why = images.get(meta.image, size)
                 test.not_nil(picture, "appwizard@" .. tostring(size) .. ": " .. tostring(why))
@@ -72,10 +72,10 @@ local function define_tests()
         end)
 
         test.it("carries its own two policies: no spawning, no registry changes, one environment variable", function()
-            local data = data_of("windows.appwiz:window")
+            local data = data_of("chicago.appwiz:window")
             local security: any = data.security or {}
-            test.eq(table.concat(security.policies or {}, ","), "windows.appwiz:window_scope,windows.appwiz:window_env")
-            local scope = data_of("windows.appwiz:window_scope")
+            test.eq(table.concat(security.policies or {}, ","), "chicago.appwiz:window_scope,chicago.appwiz:window_env")
+            local scope = data_of("chicago.appwiz:window_scope")
             local actions: any = {}
             for _, action in ipairs(scope.policy.actions) do actions[action] = true end
             test.is_true(actions["hub.cache.list"] and actions["registry.find"] and actions["fs.get"] or false,
@@ -83,19 +83,19 @@ local function define_tests()
             for _, forbidden in ipairs({"process.spawn", "registry.apply", "exec.run", "env.get"}) do
                 test.is_nil(actions[forbidden], forbidden .. " is not the scope's")
             end
-            local env = data_of("windows.appwiz:window_env")
+            local env = data_of("chicago.appwiz:window_env")
             test.eq(table.concat(env.policy.actions, ",") .. "|" .. table.concat(env.policy.resources, ","),
-                "env.get|WINDOWS_DEPS_FS", "the environment by name, not *")
+                "env.get|CHICAGO_DEPS_FS", "the environment by name, not *")
         end)
 
         test.it("without a declarations folder lists the modules read-only and says why", function()
             local state, context = open()
-            test.is_true(state.readonly, "the harness names no WINDOWS_DEPS_FS")
+            test.is_true(state.readonly, "the harness names no CHICAGO_DEPS_FS")
             local shell: any = nil
             for _, line in ipairs(state.rows) do
-                if line.component == "windows/shell" then shell = line end
+                if line.component == "chicago/shell" then shell = line end
             end
-            test.not_nil(shell, "windows/shell is among the modules")
+            test.not_nil(shell, "chicago/shell is among the modules")
             test.eq(shell and shell.owner, "module", "declared by a module, not by the application")
             local tree = definition.view(state, context)
             local found = nodes(tree)
@@ -104,7 +104,7 @@ local function define_tests()
             -- Not set, rather than refused: the window's env policy grants the
             -- name, and a refusal would read "no env.get permission".
             test.eq(status_of(tree),
-                "read-only: WINDOWS_DEPS_FS is not set — the application did not name the declarations folder")
+                "read-only: CHICAGO_DEPS_FS is not set — the application did not name the declarations folder")
             definition.update(state, {type = "activate", id = "close"}, context)
             test.is_true(context.closing, "Close closes the window")
         end)

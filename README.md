@@ -58,14 +58,21 @@ policy allows `*` has it already.
   backup and a read-back.
 - `windows.appwiz:window` — the process on the shell's SDK
   (`windows.shell.sdk:app`): a table of modules, Install… / Remove / Refresh,
-  the status line. Its picture `appwizard` comes from the shell's catalog.
+  the status line.
+- `windows.appwiz:images` — the module carries its own picture, an image
+  pack of the shell (`meta.type: windows.images`) under
+  `assets/images/{32,16}`: `appwizard`, named
+  `windows.appwiz:images/appwizard` by the entry; copied from the shell's
+  icon set (Microsoft's artwork from `shell32.dll`, see
+  `assets/images/SOURCE.md`) and embedded at publish through `embed:` in
+  `wippy.yaml`.
 - `windows.appwiz:window_scope`, `windows.appwiz:window_env` — its
   permissions: read the registry, the module cache and the declarations
   folder, the one environment variable; no processes, no registry changes.
 
-The module depends on `windows/shell` (the SDK, the picture, the environment
-reader `windows.shell.config:environment`) and `windows/tui-desktop` (the
-compositor).
+The module depends on `windows/shell` (the SDK, the image packs, the
+environment reader `windows.shell.config:environment`) and
+`windows/tui-desktop` (the compositor).
 
 ## Developing
 
@@ -95,4 +102,5 @@ https://github.com/wippy-windows/appwiz. Add/Remove Programs was part of
 
 ## Licence
 
-MIT.
+MIT. The picture in `assets/images` is Microsoft's artwork (`shell32.dll`),
+copied from the shell's icon set, and is not covered by the licence.

@@ -1,5 +1,5 @@
 -- Add/Remove Programs' window: the registry entry the Start menu reads (the
--- Settings folder, windows.admin, the shell's picture), the permissions its
+-- Settings folder, windows.admin, the picture of its own pack), the permissions its
 -- process carries, the process itself in a harness that names no
 -- declarations folder, and a shot (test/shots/appwiz.png) drawn by the
 -- shell's own renderer.
@@ -54,17 +54,19 @@ end
 
 local function define_tests()
     test.describe("Add/Remove Programs window", function()
-        test.it("is a Settings window on the shell SDK, for windows.admin only, with the shell's picture", function()
+        test.it("is a Settings window on the shell SDK, for windows.admin only, with the picture of its own pack", function()
             local _, meta = data_of("windows.appwiz:window")
             test.eq(table.concat({meta.type, meta.title, meta.group, meta.image, meta.window_type,
                 meta.pixel_render, meta.pixel_state}, "|"),
-                "tui_desktop.window|Add/Remove Programs|Settings|appwizard|app|"
+                "tui_desktop.window|Add/Remove Programs|Settings|windows.appwiz:images/appwizard|app|"
                     .. "windows.shell.sdk:render|windows.appwiz:window")
             -- An entry without the field opens for everyone, silently: the
             -- compositor asks the logged-on person's scope only when it is named.
             test.eq(meta.requires, "windows.admin")
+            -- The shell resolves a pack picture through the registry: the
+            -- entry is an fs.directory of meta.type windows.images.
             for _, size in ipairs({32, 16}) do
-                local picture, why = images.get("appwizard", size)
+                local picture, why = images.get(meta.image, size)
                 test.not_nil(picture, "appwizard@" .. tostring(size) .. ": " .. tostring(why))
             end
         end)

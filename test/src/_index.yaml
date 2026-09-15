@@ -33,7 +33,7 @@ entries:
     kind: function.lua
     meta:
       type: test
-      comment: "The window's registry entry the Start menu reads (Settings, windows.admin, the shell's picture), its policies, the process without a declarations folder, and test/shots/appwiz.png drawn by the shell's renderer."
+      comment: "The window's registry entry the Start menu reads (Settings, windows.admin, the picture of its own image pack at both sizes), its policies, the process without a declarations folder, and test/shots/appwiz.png drawn by the shell's renderer."
       group: Add/Remove Programs
       suite: windows_appwiz
     source: file://window_test.lua

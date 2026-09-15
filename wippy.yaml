@@ -23,3 +23,8 @@ exclude:
   - "test:**"
   - ".wippy/**"
   - ".wippy:**"
+# `wippy publish` packs the entries of src/ and embeds only the fs.directory
+# entries listed under `embed:`. The image pack lives outside src/ and is
+# packed only when named here.
+embed:
+  - windows.appwiz:images

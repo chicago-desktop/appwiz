@@ -19,7 +19,7 @@ entries:
     kind: ns.definition
     meta:
       title: "Add/Remove Programs"
-      description: "Add/Remove Programs for the Windows 95 shell — the application's wippy modules, and edits of its dependency declarations."
+      description: "Add/Remove Programs for the Chicago desktop — the application's wippy modules, and edits of its dependency declarations."
 
   # ─── Dependencies ────────────────────────────────────────────────────
   # A compatibility range, never an exact version: the lock holds the exact
@@ -28,7 +28,7 @@ entries:
     name: dep.chicago.shell
     kind: ns.dependency
     meta:
-      comment: "The Windows 95 shell — its SDK lays out and draws the window, its image packs bring the picture, its config library reads the environment."
+      comment: "The Chicago shell — its SDK lays out and draws the window, its image packs bring the picture, its config library reads the environment."
     component: chicago/shell
 
   - version: "*"
@@ -48,7 +48,7 @@ entries:
     kind: fs.directory
     meta:
       type: chicago.images
-      comment: "Add/Remove Programs' pictures — its icon at 32 and 16 px, an image pack of the shell; Microsoft's artwork, see assets/images/SOURCE.md."
+      comment: "Add/Remove Programs' pictures — its icon at 32 and 16 px, an image pack of the shell; an interim icon set, see assets/images/SOURCE.md."
     base: module
     directory: ./assets/images
     auto_init: false

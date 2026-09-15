@@ -1,6 +1,6 @@
 organization: chicago
 module: appwiz
-description: Add/Remove Programs for the Windows 95 shell (chicago/shell) — lists the application's wippy modules and edits its dependency declarations; the change takes effect after wippy update and a restart.
+description: Add/Remove Programs for the Chicago desktop — lists the application's wippy modules and edits its dependency declarations; the change takes effect after wippy update and a restart.
 license: MIT
 repository: https://github.com/chicago-desktop/appwiz
 homepage: https://wippy.ai
@@ -9,7 +9,7 @@ keywords:
   - tui
   - terminal
   - desktop
-  - windows
+  - chicago
 # No `version:` here — the publisher picks it (`wippy publish` bumps the
 # latest published one). A published version is immutable.
 exclude_meta:

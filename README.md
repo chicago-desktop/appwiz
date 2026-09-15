@@ -1,6 +1,6 @@
 # chicago/appwiz — Add/Remove Programs
 
-A module of the Windows 95 shell for the terminal desktop
+A module of the Chicago shell for the terminal desktop
 ([chicago/shell](https://github.com/chicago-desktop/shell) on
 [chicago/tui-desktop](https://github.com/chicago-desktop/tui-desktop)): it adds
 **Add/Remove Programs** to Start → Settings. A program here is a wippy
@@ -63,7 +63,7 @@ policy allows `*` has it already.
   pack of the shell (`meta.type: chicago.images`) under
   `assets/images/{32,16}`: `appwizard`, named
   `chicago.appwiz:images/appwizard` by the entry; copied from the shell's
-  icon set (Microsoft's artwork from `shell32.dll`, see
+  icon set (an interim icon set, see
   `assets/images/SOURCE.md`) and embedded at publish through `embed:` in
   `wippy.yaml`.
 - `chicago.appwiz:window_scope`, `chicago.appwiz:window_env` — its
@@ -77,11 +77,11 @@ environment reader `chicago.shell.config:environment`) and
 ## Developing
 
 ```bash
-make setup     # resolve the dependencies from the Hub (once, and after changing them)
+make setup     # resolve the dependencies (once, and after changing them)
 make check     # the repository's invariants
 make lint      # late locals, then wippy lint of this namespace and the harness
 make test      # the harness in test/: the model, the window, a shot in test/shots/
-make publish   # to the Hub, after `wippy auth login`
+make publish   # publish a release, after `wippy auth login`
 ```
 
 **A local build of the runtime fork is required**
@@ -95,12 +95,13 @@ shell's guide, and the skill for agents in
 [skills/wippy-window-app/SKILL.md](skills/wippy-window-app/SKILL.md); the
 rules of this repository are in [AGENTS.md](AGENTS.md).
 
-Made from [the Windows module template](https://github.com/chicago-desktop/module-template) for
-modules of the Windows 95 shell. Repository:
+Made from [the Chicago module template](https://github.com/chicago-desktop/module-template) for
+modules of the Chicago shell. Repository:
 https://github.com/chicago-desktop/appwiz. Add/Remove Programs was part of
 `chicago/shell` up to 0.1.0.
 
 ## Licence
 
-MIT. The picture in `assets/images` is Microsoft's artwork (`shell32.dll`),
-copied from the shell's icon set, and is not covered by the licence.
+The icon set is an interim one and is being replaced with original pixel art
+([chicago-desktop/shell#1](https://github.com/chicago-desktop/shell/issues/1));
+the code is MIT.

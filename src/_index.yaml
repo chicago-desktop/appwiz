@@ -1,0 +1,118 @@
+version: "1.0"
+namespace: windows.appwiz
+
+# "Add/Remove Programs" is appwiz, as in Windows. A program here is a wippy
+# module; the window shows declared and cached modules and edits the
+# application's declarations file. `wippy update` installs and removes them
+# after a restart; the window says so rather than pretending.
+#
+# The application names the declarations folder: WINDOWS_DEPS_FS is the id of
+# an fs.directory entry over its dependencies' folder (README, "What the
+# application provides").
+#
+# Keep the comments of this file free of an unquoted `: ` — a colon followed
+# by a space inside a meta.comment or a YAML comment value breaks the parse
+# of the whole index, and the boot with it. Quote such comments.
+
+entries:
+  - name: definition
+    kind: ns.definition
+    meta:
+      title: "Add/Remove Programs"
+      description: "Add/Remove Programs for the Windows 95 shell — the application's wippy modules, and edits of its dependency declarations."
+
+  # ─── Dependencies ────────────────────────────────────────────────────
+  # A compatibility range, never an exact version: the lock holds the exact
+  # one. `*` is any published version.
+  - version: "*"
+    name: dep.windows.shell
+    kind: ns.dependency
+    meta:
+      comment: "The Windows 95 shell — its SDK lays out and draws the window, its catalog brings the picture, its config library reads the environment."
+    component: windows/shell
+
+  - version: "*"
+    name: dep.windows.tui_desktop
+    kind: ns.dependency
+    meta:
+      comment: "The desktop base — the compositor that owns the window's frame, size and input, and asks the logged-on person's scope for windows.admin."
+    component: windows/tui-desktop
+
+  # windows.appwiz:model
+  - name: model
+    kind: library.lua
+    meta:
+      comment: "The pure model of the install panel — merging declarations with the cache, editing the declarations text, the name of a new entry."
+    source: file://model.lua
+    imports:
+      geometry: windows.tui_desktop.desktop:geometry
+
+  # Permissions: the same as the view provider's (context, the compositor in
+  # the process registry, sending state to it), plus reading the registry and
+  # the module cache and the declarations folder itself. The window can
+  # neither spawn processes nor change the registry: it has nothing to remove
+  # a module from the running runtime with, and the permissions do not grant
+  # that. The environment is granted by name, in window_env.
+  - name: window_scope
+    kind: security.policy
+    meta:
+      comment: "Permissions of the install panel — read the registry and the module cache, read and write the declarations folder, publish state to the compositor; do not touch processes or the registry."
+    policy:
+      actions:
+        - process.context
+        - process.registry
+        - process.send
+        - registry.get
+        - registry.find
+        - fs.get
+        - hub.cache.list
+      resources: "*"
+      effect: allow
+
+  # The one variable the window reads (window.lua): the name of the
+  # declarations folder. By name — neighbouring names hold tokens.
+  - name: window_env
+    kind: security.policy
+    meta:
+      comment: "The environment the install panel reads — the name of the declarations folder, and nothing else."
+    policy:
+      actions:
+        - env.get
+      resources:
+        - WINDOWS_DEPS_FS
+      effect: allow
+
+  # windows.appwiz:window
+  - name: window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: "Add/Remove Programs"
+      # Edits the application's dependencies: only for windows.admin.
+      requires: windows.admin
+      image: appwizard
+      icon: "▦"
+      group: Settings
+      order: 100
+      width: 76
+      height: 22
+      window_type: app
+      resizable: true
+      pixel_render: windows.shell.sdk:render
+      pixel_state: windows.appwiz:window
+      comment: "Add/Remove Programs — wippy modules from the application's declarations and the cache; remove and add a declaration, takes effect after wippy update and a restart."
+    source: file://window.lua
+    method: main
+    modules:
+      - env
+      - fs
+      - hub
+      - registry
+      - time
+    security:
+      policies: [windows.appwiz:window_scope, windows.appwiz:window_env]
+    imports:
+      geometry: windows.tui_desktop.desktop:geometry
+      app: windows.shell.sdk:app
+      model: windows.appwiz:model
+      environment: windows.shell.config:environment

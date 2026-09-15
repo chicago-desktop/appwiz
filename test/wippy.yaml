@@ -1,0 +1,4 @@
+organization: windows
+module: appwiz-harness
+description: Standalone runnable harness that boots windows/appwiz with the shell and runs its co-located *_test.lua suites.
+version: "1.0"

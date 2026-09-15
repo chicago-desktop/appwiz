@@ -1,0 +1,12 @@
+{
+  "templateVersion": 1,
+  "initialized": true,
+  "identity": {
+    "organization": "windows",
+    "module": "appwiz",
+    "namespace": "windows.appwiz",
+    "tag": "windows-appwiz",
+    "title": "Add Remove Programs",
+    "githubOwner": "wippy-windows"
+  }
+}
